@@ -92,24 +92,39 @@ li button {
 
 <h1>Meine To-Do Liste 📝</h1>
 
+<select id="listeAuswahl">
+    <option value="arbeit">Arbeit</option>
+    <option value="privat">Privat</option>
+</select>
+
 <input type="text" id="eingabe" placeholder="Neue Aufgabe">
 <button onclick="hinzufuegen()">Hinzufügen</button>
 
 <ul id="liste"></ul>
 
 <script>
+
 function speichern() {
     let items = [];
+
     document.querySelectorAll("li").forEach(li => {
-        items.push(li.innerText);
+        items.push(li.innerText.replace("❌", "").trim());
     });
-    localStorage.setItem("todos", JSON.stringify(items));
+
+    let liste = document.getElementById("listeAuswahl").value;
+    localStorage.setItem(liste, JSON.stringify(items));
 }
 
 function laden() {
-    let items = JSON.parse(localStorage.getItem("todos")) || [];
+    const ul = document.getElementById("liste");
+    ul.innerHTML = "";
+
+    const liste = document.getElementById("listeAuswahl").value;
+    const items = JSON.parse(localStorage.getItem(liste)) || [];
+
     items.forEach(text => aufgabeErstellen(text));
 }
+   
 
 function aufgabeErstellen(text) {
     let li = document.createElement("li");
@@ -153,6 +168,8 @@ document.getElementById("eingabe").addEventListener("keypress", function(event) 
         hinzufuegen();
     }
 });
+
+document.getElementById("listeAuswahl").addEventListener("change", laden);
 </script>
 
 </body>
