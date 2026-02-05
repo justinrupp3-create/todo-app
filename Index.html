@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do Liste</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input {
+            padding: 10px;
+            width: 200px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background: white;
+            margin: 10px auto;
+            padding: 10px;
+            width: 250px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Meine To-Do Liste 📝</h1>
+
+<input type="text" id="eingabe" placeholder="Neue Aufgabe">
+<button onclick="hinzufuegen()">Hinzufügen</button>
+
+<ul id="liste"></ul>
+
+<script>
+function speichern() {
+    let items = [];
+    document.querySelectorAll("li").forEach(li => {
+        items.push(li.innerText);
+    });
+    localStorage.setItem("todos", JSON.stringify(items));
+}
+
+function laden() {
+    let items = JSON.parse(localStorage.getItem("todos")) || [];
+    items.forEach(text => aufgabeErstellen(text));
+}
+
+function aufgabeErstellen(text) {
+    let li = document.createElement("li");
+    li.innerText = text;
+
+    li.onclick = function() {
+        li.remove();
+        speichern();
+    };
+
+    document.getElementById("liste").appendChild(li);
+}
+
+function hinzufuegen() {
+    let text = document.getElementById("eingabe").value;
+    if (text === "") return;
+
+    aufgabeErstellen(text);
+    speichern();
+
+    document.getElementById("eingabe").value = "";
+}
+
+laden();
+</script>
+
+</body>
+</html>
