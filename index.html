@@ -103,12 +103,26 @@ function aufgabeErstellen(text) {
     let li = document.createElement("li");
     li.innerText = text;
 
-  li.onclick = function() {
-    li.classList.toggle("fertig");
-    speichern();
-};
+    // Durchstreichen beim Klick
+    li.onclick = function() {
+        li.classList.toggle("fertig");
+        speichern();
+    };
 
+    // Löschen-Button erstellen
+    let loeschen = document.createElement("button");
+    loeschen.innerText = "❌";
+    loeschen.style.marginLeft = "10px";
+
+    loeschen.onclick = function(event) {
+        event.stopPropagation(); // verhindert Durchstreichen
+        li.remove();
+        speichern();
+    };
+
+    li.appendChild(loeschen);
     document.getElementById("liste").appendChild(li);
+}
 }
 
 function hinzufuegen() {
