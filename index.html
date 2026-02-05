@@ -49,6 +49,30 @@
     text-decoration: line-through;
     opacity: 0.6;
 } 
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #121212;
+        color: #ffffff;
+    }
+
+    li {
+        background: #1e1e1e;
+    }
+
+    input {
+        background: #1e1e1e;
+        color: white;
+        border: 1px solid #444;
+    }
+
+    button {
+        background: #2e7d32;
+    }
+
+    button:hover {
+        background: #1b5e20;
+    }
+}
     </style>
 </head>
 
@@ -98,6 +122,11 @@ function hinzufuegen() {
 }
 
 laden();
+document.getElementById("eingabe").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        hinzufuegen();
+    }
+});
 </script>
 
 </body>
