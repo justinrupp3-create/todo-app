@@ -45,6 +45,10 @@
             cursor: pointer;
             border-radius: 5px;
         }
+       .fertig {
+    text-decoration: line-through;
+    opacity: 0.6;
+} 
     </style>
 </head>
 
@@ -75,10 +79,10 @@ function aufgabeErstellen(text) {
     let li = document.createElement("li");
     li.innerText = text;
 
-    li.onclick = function() {
-        li.remove();
-        speichern();
-    };
+  li.onclick = function() {
+    li.classList.toggle("fertig");
+    speichern();
+};
 
     document.getElementById("liste").appendChild(li);
 }
